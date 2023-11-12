@@ -24,115 +24,24 @@ public class AdminCliente {
     ArrayList<Cliente> db_Temp = new ArrayList<Cliente>();
     ArrayList<Cliente> db_Temp2 = new ArrayList<Cliente>();
     
-    public String buscarClientePorNombre(String name){
-        
-        //##########################CARGA_BASE DE DATOS#############
-        tablaDeClientes();
-        
-        //##########################INGRESO_VACIO###################
-        if(name.equals("")){
-            name = "No busque nada";
-            resultBusqueda = "Debe ingresar datos a buscar";
+    private Busqueda busqueda;
+    public void setBusqueda(Busqueda busqueda) {
+        this.Busqueda = busqueda;
+    }
+// se implementaron calses y interfces nuevas para busqueda de manera que no se tenga que modificar la clase AdminCliente cumpliendo con el principio de abierto/cerrrado
+    public List<Cliente> buscarCliente(String filtro) {
+        if (estrategiaBusqueda == null) {
+            throw new IllegalStateException("Se requiere una estrategia de búsqueda.");
         }
-        //##########################CONVIRTIENDO A MAYUSCULA################################
-        cadena = name.substring(0,1).toUpperCase() + name.substring(1, name.length());
-        int longitud = datos.size();
-            for(int i = 0; i<longitud;i++){
-            
-                String NombreBuscado = datos.get(i).getName();
-           
-                if (NombreBuscado.equals(cadena)){
-                
-                    db_Temp.add(datos.get(i));
-                    
-                resultBusqueda = datos.get(i).getName();
-                
-                }
-            }
-                if (db_Temp.size()>0){
-                    for (int j=0; j<db_Temp.size();j++){
-                        System.out.println("SU BÚSQUEDA POR NOMBRE MUESTRA LOS SIGUIENTES RESULTADOS\t" + "\n");
-                        mostrar(j);
-                    }
-                }else{
-                resultBusqueda = "No se encontraron registros para los filtros ingresados";
-                }
-        return resultBusqueda;    
+
+        return busqueda.buscar(datos, filtro);
     }
     
     
-    public String buscarClientePorApellidoPaterno(String surname1){
-        
-        //##########################CARGA_BASE DE DATOS#############
-        tablaDeClientes();
-        
-        //##########################INGRESO_VACIO###################
-        if(surname1.equals("")){
-            surname1 = "No busque nada";
-            resultBusqueda = "Debe ingresar datos a buscar";
-        }
-        //##########################CONVIRTIENDO A MAYUSCULA################################
-        cadena = surname1.substring(0,1).toUpperCase() + surname1.substring(1, surname1.length());
-        int longitud = datos.size();
-            for(int i = 0; i<longitud;i++){
-            
-                String PaternoBuscado = datos.get(i).getSurname1();
-           
-                if (PaternoBuscado.equals(cadena)){
-                
-                    db_Temp.add(datos.get(i));
-                    
-                resultBusqueda = datos.get(i).getSurname1();
-                
-                }
-            }
-                if (db_Temp.size()>0){
-                    for (int j=0; j<db_Temp.size();j++){
-                        System.out.println("SU BÚSQUEDA POR APELLIDO PATERNO MUESTRA LOS SIGUIENTES RESULTADOS\t" + "\n");
-                        mostrar(j);
-                    }
-                }else{
-                resultBusqueda = "No se encontraron registros para los filtros ingresados";
-                }
-        return resultBusqueda;    
-    }
     
     
-    public String buscarClientePorApellidoMaterno(String surname2){
-        
-        //##########################CARGA_BASE DE DATOS#############
-        tablaDeClientes();
-        
-        //##########################INGRESO_VACIO###################
-        if(surname2.equals("")){
-            surname2 = "No busque nada";
-            resultBusqueda = "Debe ingresar datos a buscar";
-        }
-        //##########################CONVIRTIENDO A MAYUSCULA################################
-        cadena = surname2.substring(0,1).toUpperCase() + surname2.substring(1, surname2.length());
-        int longitud = datos.size();
-            for(int i = 0; i<longitud;i++){
-            
-                String MaternoBuscado = datos.get(i).getSurname2();
-           
-                if (MaternoBuscado.equals(cadena)){
-                
-                    db_Temp.add(datos.get(i));
-                    
-                resultBusqueda = datos.get(i).getSurname2();
-                
-                }
-            }
-                if (db_Temp.size()>0){
-                    for (int j=0; j<db_Temp.size();j++){
-                        System.out.println("SU BÚSQUEDA POR APELLIDO MATERNO MUESTRA LOS SIGUIENTES RESULTADOS\t" + "\n");
-                        mostrar(j);
-                    }
-                }else{
-                resultBusqueda = "No se encontraron registros para los filtros ingresados";
-                }
-        return resultBusqueda;    
-    }
+    
+   
     
     public String buscarClientePorCorreo(String mail){
         
